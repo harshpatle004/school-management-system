@@ -1,15 +1,15 @@
 package com.myschool.backend.dto;
 
 import com.myschool.backend.entity.Role;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
-@Setter
-public class LoginRequest {
+@AllArgsConstructor
+public class LoginResponse {
 
     private String schoolId;
     private Role role;
     private String loginId;
-    private String password;
+    private String token;
 }
