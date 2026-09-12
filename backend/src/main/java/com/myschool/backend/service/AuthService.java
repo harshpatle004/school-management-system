@@ -1,6 +1,8 @@
 package com.myschool.backend.service;
 
 import com.myschool.backend.dto.CreateUserResponse;
+import com.myschool.backend.dto.LoginRequest;
+import com.myschool.backend.dto.LoginResponse;
 import com.myschool.backend.entity.Role;
 import com.myschool.backend.entity.School;
 import com.myschool.backend.entity.User;
@@ -100,6 +102,42 @@ public class AuthService {
                 role,
                 loginId,
                 password
+        );
+    }
+
+    public LoginResponse login(LoginRequest request) {
+
+        School school = schoolRepository
+                .findBySchoolId(request.getSchoolId())
+                .orElseThrow(() ->
+                        new RuntimeException("Invalid school ID")
+                );
+
+        User user = userRepository
+                .findByLoginIdAndRoleAndSchool(
+                        request.getLoginId(),
+                        request.getRole(),
+                        school
+                )
+                .orElseThrow(() ->
+                        new RuntimeException("Invalid login credentials")
+                );
+
+        if (!passwordEncoder.matches(
+                request.getPassword(),
+                user.getPassword()
+        )) {
+            throw new RuntimeException("Invalid login credentials");
+        }
+
+
+        String token = "TEMP_TOKEN";
+
+        return new LoginResponse(
+                school.getSchoolId(),
+                user.getRole(),
+                user.getLoginId(),
+                token
         );
     }
 }
