@@ -50,6 +50,15 @@ import com.example.vidyasar.R
 import com.example.vidyasar.ui.theme.VidyasaarBlue
 import com.example.vidyasar.ui.theme.VidyasaarNavy
 import androidx.compose.runtime.setValue
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.VisibilityOff
+import androidx.compose.material.icons.filled.ArrowForward
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen(
@@ -72,6 +81,10 @@ fun LoginScreen(
 
     var password by remember {
         mutableStateOf("")
+    }
+
+    var passwordVisible by remember {
+        mutableStateOf(false)
     }
 
     Box(
@@ -232,14 +245,16 @@ fun LoginScreen(
                     end = 24.dp,
                     top = 250.dp
                 )
-                .clip(RoundedCornerShape(25.dp))
+                .clip(RoundedCornerShape(20.dp))
                 .background(Color.White)
         ){
 
             Column(
                 modifier = Modifier
-                    .padding(start = 15.dp)
+                    .padding(start = 20.dp)
+                    .padding(end = 20.dp)
                     .padding(top = 20.dp)
+                    .padding(bottom = 20.dp)
             ) {
                 Text(
                     text = "Welcome Back",
@@ -394,16 +409,170 @@ fun LoginScreen(
                         }
                     }
                 }
+
+                Spacer(modifier = Modifier.height(10.dp))
+
+                TextField(
+                    value = userId,
+                    onValueChange = { userId = it },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(56.dp),
+
+                    placeholder = {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Person,
+                                contentDescription = "User ID",
+                                modifier = Modifier.size(21.dp),
+                                tint = VidyasaarBlue
+                            )
+
+                            Spacer(modifier = Modifier.width(10.dp))
+
+                            Text(
+                                text = "User ID",
+                                fontSize = 14.sp,
+                                color = VidyasaarNavy.copy(alpha = 0.55f)
+                            )
+                        }
+                    },
+
+                    singleLine = true,
+
+                    shape = RoundedCornerShape(14.dp),
+
+                    colors = TextFieldDefaults.colors(
+                        focusedContainerColor =
+                            VidyasaarBlue.copy(alpha = 0.06f),
+
+                        unfocusedContainerColor =
+                            VidyasaarBlue.copy(alpha = 0.06f),
+
+                        focusedIndicatorColor =
+                            Color.Transparent,
+
+                        unfocusedIndicatorColor =
+                            Color.Transparent
+                    )
+                )
+                var visualTransformation =
+                    if (passwordVisible)
+                    VisualTransformation.None
+                else
+                    PasswordVisualTransformation()
+
+
+                // Component — Password Field
+                Spacer(modifier = Modifier.height(10.dp))
+
+                TextField(
+                    value = password,
+                    onValueChange = { password = it },
+
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(56.dp),
+
+                    placeholder = {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Lock,
+                                contentDescription = "Password",
+                                modifier = Modifier.size(21.dp),
+                                tint = VidyasaarBlue
+                            )
+
+                            Spacer(modifier = Modifier.width(10.dp))
+
+                            Text(
+                                text = "Password",
+                                fontSize = 14.sp,
+                                color = VidyasaarNavy.copy(alpha = 0.55f)
+                            )
+                        }
+                    },
+
+                    trailingIcon = {
+                        Icon(
+                            imageVector = Icons.Default.VisibilityOff,
+                            contentDescription = "Show Password",
+                            modifier = Modifier.size(21.dp),
+                            tint = VidyasaarNavy.copy(alpha = 0.55f)
+                        )
+                    },
+
+                    singleLine = true,
+
+                    shape = RoundedCornerShape(14.dp),
+
+                    colors = TextFieldDefaults.colors(
+                        focusedContainerColor =
+                            VidyasaarBlue.copy(alpha = 0.06f),
+
+                        unfocusedContainerColor =
+                            VidyasaarBlue.copy(alpha = 0.06f),
+
+                        focusedIndicatorColor =
+                            Color.Transparent,
+
+                        unfocusedIndicatorColor =
+                            Color.Transparent
+                    )
+                )
+
+
+                // LOGIN BUTTON — PUT HERE
+                Spacer(modifier = Modifier.height(18.dp))
+
+                Button(
+                    onClick = {
+                        // Login action
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(60.dp),
+                    shape = RoundedCornerShape(14.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = VidyasaarBlue
+                    )
+                ) {
+                    Text(
+                        text = "Login",
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.White
+                    )
+
+                    Spacer(modifier = Modifier.width(12.dp))
+
+                    Icon(
+                        imageVector = Icons.Default.ArrowForward,
+                        contentDescription = "Login",
+                        modifier = Modifier.size(28.dp),
+                        tint = Color.White
+                    )
+                }
+
+            } // Column closes here
+
             }
 
+
+
+            }
 
 
         }
 
 
 
-    }
-}
+
+
 
 
 @Preview(
