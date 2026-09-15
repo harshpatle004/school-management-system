@@ -1,5 +1,6 @@
 package com.example.vidyasar.login
 
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -99,7 +100,7 @@ fun LoginScreen(
             modifier = Modifier
                 .padding(
                     start = 43.dp,
-                    top = 70.dp
+                    top = 65.dp
                 )
         ) {
 
@@ -237,6 +238,15 @@ fun LoginScreen(
 
         )
 
+        Canvas(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(360.dp)
+                .align(Alignment.BottomCenter)
+        ) {
+            // wave
+        }
+
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -259,7 +269,7 @@ fun LoginScreen(
                 Text(
                     text = "Welcome Back",
                     fontWeight = FontWeight.Bold,
-                    fontSize = 24.sp,
+                    fontSize = 22.sp,
                     color = VidyasaarNavy,
 
                 )
@@ -269,7 +279,9 @@ fun LoginScreen(
                 Text(
                     text = "Sign in to Continue to Vidyasaar",
                     color = VidyasaarNavy.copy(alpha = 0.55f),
-                    fontWeight = FontWeight.Normal
+                    fontWeight = FontWeight.Normal,
+                    fontSize = 15.sp
+
                 )
 
                 Spacer(modifier = Modifier.height(10.dp))
@@ -535,7 +547,7 @@ fun LoginScreen(
                     },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(60.dp),
+                        .height(50.dp),
                     shape = RoundedCornerShape(14.dp),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = VidyasaarBlue
@@ -557,8 +569,9 @@ fun LoginScreen(
                         tint = Color.White
                     )
                 }
+                Spacer(modifier = Modifier.height(7.dp))
 
-            } // Column closes here
+            }
 
             }
 
