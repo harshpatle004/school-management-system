@@ -31,7 +31,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
@@ -57,13 +56,18 @@ import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.lifecycle.viewmodel.compose.viewModel
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen(
-    navController: NavController
+    navController: NavController,
+    onLoginSuccess: () -> Unit
 ) {
 
     var schoolId by remember {
@@ -88,12 +92,122 @@ fun LoginScreen(
         mutableStateOf(false)
     }
 
+    val viewModel: LoginViewModel = viewModel()
+
+    val loginSuccess by viewModel.loginSuccess.collectAsState()
+
+    LaunchedEffect(loginSuccess) {
+        if (loginSuccess) {
+            onLoginSuccess()
+        }
+    }
+
     Box(
         modifier = Modifier.fillMaxSize()
             .background(
                 VidyasaarBlue.copy(alpha = 0.035f)
             )
     ) {
+
+        Box(
+            modifier = Modifier.fillMaxWidth()
+                .align(Alignment.BottomCenter)
+        ){
+            Image(
+                painter = painterResource(R.drawable.waves),
+                contentDescription = null
+            )
+        }
+
+        Box(
+            modifier = Modifier.size(
+                width = 350.dp,
+                height = 350.dp
+            )
+                .padding(start = 10.dp)
+                .align(Alignment.BottomCenter)
+                .offset(y = 218.dp)
+        ){
+            Image(
+                painter = painterResource(R.drawable.schoolground),
+                contentDescription = null
+            )
+        }
+
+        Box(
+            modifier = Modifier
+                .size(
+                    width = 150.dp,
+                    height = 150.dp
+                )
+                .offset(
+                    x = -43.dp,
+                    y = -20.dp
+                )
+                .align(Alignment.BottomEnd)
+                .alpha(0.08f)
+                .clip(CircleShape)
+                .background(color = VidyasaarBlue)
+
+        )
+
+        Box(
+            modifier = Modifier.size(
+                width = 200.dp,
+                height = 200.dp
+            )
+
+                .align(Alignment.BottomEnd)
+                .offset(x = -25.dp ,y = 40.dp)
+        ){
+            Image(
+                painter = painterResource(R.drawable.school),
+                contentDescription = null
+            )
+        }
+
+        Box(
+            modifier = Modifier.fillMaxWidth()
+                .align(Alignment.BottomCenter)
+        ){
+            Image(
+                painter = painterResource(R.drawable.bluelayer),
+                contentDescription = null
+            )
+        }
+
+        Box(
+            modifier = Modifier.size(
+                width = 200.dp,
+                height = 200.dp
+            )
+                .align(Alignment.BottomStart)
+                .offset(y = 35.dp)
+        ){
+            Image(
+                painter = painterResource(R.drawable.bottemrleaf),
+                contentDescription = null
+                    )
+        }
+
+
+
+        Box(
+            modifier = Modifier.size(
+                width = 200.dp,
+                height = 200.dp
+            )
+                .align(Alignment.BottomEnd)
+                .offset(y = 35.dp)
+        ){
+            Image(
+                painter = painterResource(R.drawable.bottemlleaf),
+                contentDescription = null
+            )
+        }
+
+
+
 
         // Components #1 - #4
         Column(
@@ -543,7 +657,12 @@ fun LoginScreen(
 
                 Button(
                     onClick = {
-                        // Login action
+                        viewModel.loin(
+                            schoolId = schoolId,
+                            role = role,
+                            userId = userId,
+                            password = password
+                        )
                     },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -595,6 +714,9 @@ fun LoginScreen(
 @Composable
 fun LoginScreenPreview() {
     LoginScreen(
-        navController = rememberNavController()
+        navController = rememberNavController(),
+        onLoginSuccess = {
+
+        }
     )
 }
