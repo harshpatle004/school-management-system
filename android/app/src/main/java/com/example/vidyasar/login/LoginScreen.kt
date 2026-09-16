@@ -529,7 +529,7 @@ fun LoginScreen(
                                 },
                                 onClick = {
                                     role = selectedRole
-                                    roleExpanded = false
+                                    roleExpanded = true
                                 }
                             )
                         }
