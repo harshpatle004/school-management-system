@@ -111,21 +111,37 @@ public class AuthService {
 
     public LoginResponse login(LoginRequest request) {
 
-        School school = schoolRepository
-                .findBySchoolId(request.getSchoolId())
-                .orElseThrow(() ->
-                        new RuntimeException("Invalid school ID")
-                );
+        User user;
 
-        User user = userRepository
-                .findByLoginIdAndRoleAndSchool(
-                        request.getLoginId(),
-                        request.getRole(),
-                        school
-                )
-                .orElseThrow(() ->
-                        new RuntimeException("Invalid login credentials")
-                );
+        if (request.getRole() == Role.SUPER_ADMIN) {
+
+            user = userRepository
+                    .findByLoginIdAndRole(
+                            request.getLoginId(),
+                            Role.SUPER_ADMIN
+                    )
+                    .orElseThrow(() ->
+                            new RuntimeException("Invalid login credentials")
+                    );
+
+        } else {
+
+            School school = schoolRepository
+                    .findBySchoolId(request.getSchoolId())
+                    .orElseThrow(() ->
+                            new RuntimeException("Invalid school ID")
+                    );
+
+            user = userRepository
+                    .findByLoginIdAndRoleAndSchool(
+                            request.getLoginId(),
+                            request.getRole(),
+                            school
+                    )
+                    .orElseThrow(() ->
+                            new RuntimeException("Invalid login credentials")
+                    );
+        }
 
         if (!passwordEncoder.matches(
                 request.getPassword(),
@@ -134,11 +150,14 @@ public class AuthService {
             throw new RuntimeException("Invalid login credentials");
         }
 
+        String token = jwtSecurity.generateToken(user.getLoginId());
 
-        String token = jwtSecurity.generateToken(user.getLoginId());;
+        String schoolId = user.getSchool() != null
+                ? user.getSchool().getSchoolId()
+                : null;
 
         return new LoginResponse(
-                school.getSchoolId(),
+                schoolId,
                 user.getRole(),
                 user.getLoginId(),
                 token
