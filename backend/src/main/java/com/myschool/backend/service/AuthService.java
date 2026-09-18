@@ -8,6 +8,7 @@ import com.myschool.backend.entity.School;
 import com.myschool.backend.entity.User;
 import com.myschool.backend.repository.SchoolRepository;
 import com.myschool.backend.repository.UserRepository;
+import com.myschool.backend.security.JwtSecurity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -19,14 +20,17 @@ public class AuthService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final SchoolRepository schoolRepository;
+    private final JwtSecurity jwtSecurity;
 
     public AuthService(UserRepository userRepository,
                        PasswordEncoder passwordEncoder,
-                       SchoolRepository schoolRepository) {
+                       SchoolRepository schoolRepository,
+                       JwtSecurity jwtSecurity) {
 
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.schoolRepository = schoolRepository;
+        this.jwtSecurity = jwtSecurity ;
     }
 
     private String generateLoginId(Role role, School school) {
@@ -131,7 +135,7 @@ public class AuthService {
         }
 
 
-        String token = "TEMP_TOKEN";
+        String token = jwtSecurity.generateToken(user.getLoginId());;
 
         return new LoginResponse(
                 school.getSchoolId(),
