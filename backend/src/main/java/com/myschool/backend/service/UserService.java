@@ -1,6 +1,7 @@
 package com.myschool.backend.service;
 
 import com.myschool.backend.entity.Role;
+import com.myschool.backend.entity.School;
 import com.myschool.backend.entity.User;
 import com.myschool.backend.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,17 +18,20 @@ public class UserService {
         this.passwordEncoder = passwordEncoder ;
     }
 
-    public User CreateUser(String loginId, String password, Role role){
-
+    public User createUser(
+            String loginId,
+            String password,
+            Role role,
+            School school
+    ) {
         User user = new User();
+
         user.setLoginId(loginId);
         user.setPassword(passwordEncoder.encode(password));
         user.setRole(role);
+        user.setSchool(school);
 
-       return  userRepository.save(user);
-
-
-
+        return userRepository.save(user);
     }
 
 
