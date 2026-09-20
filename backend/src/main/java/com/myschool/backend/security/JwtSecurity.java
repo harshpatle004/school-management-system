@@ -1,5 +1,6 @@
 package com.myschool.backend.security;
 
+import com.myschool.backend.entity.User;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Service;
@@ -27,5 +28,31 @@ public class JwtSecurity {
                 .expiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .signWith(getSigningKey())
                 .compact();
+    }
+
+    public String extractLoginId(String token) {
+        return Jwts.parser()
+                .verifyWith(getSigningKey())
+                .build()
+                .parseSignedClaims(token)
+                .getPayload()
+                .getSubject();
+    }
+
+    private boolean isTokenExpired(String token) {
+        return Jwts.parser()
+                .verifyWith(getSigningKey())
+                .build()
+                .parseSignedClaims(token)
+                .getPayload()
+                .getExpiration()
+                .before(new Date());
+    }
+
+    public boolean isTokenValid(String token, User user) {
+        String loginId = extractLoginId(token);
+
+        return loginId.equals(user.getLoginId())
+                && !isTokenExpired(token);
     }
 }
