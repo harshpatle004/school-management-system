@@ -8,34 +8,35 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class SchoolService {
-    private final SchoolRepository schoolRepository ;
+    private final SchoolRepository schoolRepository;
 
 
-
-    public SchoolService(SchoolRepository schoolRepository){
-        this.schoolRepository = schoolRepository ;
+    public SchoolService(SchoolRepository schoolRepository) {
+        this.schoolRepository = schoolRepository;
 
     }
 
-    public School createSchool(CreateSchoolRequest request){
+    public School createSchool(CreateSchoolRequest request) {
 
-     if(!schoolRepository.existsBySchoolId(request.getSchoolId())){
+        if (schoolRepository.existsBySchoolId(request.getSchoolId())) {
 
-         throw new RuntimeException("School id already exists");
+            throw new RuntimeException("School id already exists");
 
-     }
+        }
 
-     if(!schoolRepository.existsByUdiseCode(request.getUdiseCode())){
-         throw new RuntimeException("Udise already exists") ;
-     }
+        if (schoolRepository.existsByUdiseCode(request.getUdiseCode())) {
+            throw new RuntimeException("Udise already exists");
+        }
 
-     School school = new School();
+        School school = new School();
 
-     school.setSchoolId(request.getSchoolId());
-     school.setName(request.getName());
-     school.setPhoneNumber(request.getPhoneNumber());
-     school.setAddress(request.getAddress());
-     school.setUdiseCode(request.getUdiseCode());
+        school.setSchoolId(request.getSchoolId());
+        school.setName(request.getName());
+        school.setPhoneNumber(request.getPhoneNumber());
+        school.setAddress(request.getAddress());
+        school.setUdiseCode(request.getUdiseCode());
 
-     return schoolRepository.save(school);
+        return schoolRepository.save(school);
+    }
+
 }
