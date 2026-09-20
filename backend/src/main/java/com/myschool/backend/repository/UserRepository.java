@@ -24,6 +24,4 @@ public interface UserRepository extends JpaRepository<User, Long> {
             Role role,
             School school
     );
-
-    boolean existsByLoginIdAndSchool(String loginId, School school);
 }

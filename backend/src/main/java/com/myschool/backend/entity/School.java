@@ -24,4 +24,7 @@ public class School {
     private String address;
 
     private String phoneNumber;
+
+    @Column(nullable = false, unique = true)
+    private String udiseCode;
 }

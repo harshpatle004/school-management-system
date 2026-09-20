@@ -20,10 +20,10 @@ public class JwtSecurity {
         return Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
     }
 
-    public String generateToken(String loginId) {
+    public String generateToken(Long loginId) {
 
         return Jwts.builder()
-                .subject(loginId)
+                .subject(String.valueOf(loginId))
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .signWith(getSigningKey())
@@ -54,5 +54,17 @@ public class JwtSecurity {
 
         return loginId.equals(user.getLoginId())
                 && !isTokenExpired(token);
+    }
+
+    public Long extractUserId(String token) {
+
+        String userId = Jwts.parser()
+                .verifyWith(getSigningKey())
+                .build()
+                .parseSignedClaims(token)
+                .getPayload()
+                .getSubject();
+
+        return Long.parseLong(userId);
     }
 }

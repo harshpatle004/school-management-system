@@ -22,15 +22,16 @@ public class AuthService {
     private final SchoolRepository schoolRepository;
     private final JwtSecurity jwtSecurity;
 
-    public AuthService(UserRepository userRepository,
-                       PasswordEncoder passwordEncoder,
-                       SchoolRepository schoolRepository,
-                       JwtSecurity jwtSecurity) {
-
+    public AuthService(
+            UserRepository userRepository,
+            PasswordEncoder passwordEncoder,
+            SchoolRepository schoolRepository,
+            JwtSecurity jwtSecurity
+    ) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.schoolRepository = schoolRepository;
-        this.jwtSecurity = jwtSecurity ;
+        this.jwtSecurity = jwtSecurity;
     }
 
     private String generateLoginId(Role role, School school) {
@@ -53,7 +54,7 @@ public class AuthService {
             int number = 10000 + random.nextInt(90000);
             loginId = prefix + number;
 
-        } while (userRepository.existsByLoginIdAndSchool(loginId, school));
+        } while (userRepository.existsByLoginId(loginId));
 
         return loginId;
     }
@@ -150,7 +151,8 @@ public class AuthService {
             throw new RuntimeException("Invalid login credentials");
         }
 
-        String token = jwtSecurity.generateToken(user.getLoginId());
+        // JWT uses globally unique database User ID
+        String token = jwtSecurity.generateToken(user.getId());
 
         String schoolId = user.getSchool() != null
                 ? user.getSchool().getSchoolId()

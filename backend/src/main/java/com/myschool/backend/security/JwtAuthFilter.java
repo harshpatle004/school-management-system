@@ -48,21 +48,25 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         try {
 
-            String loginId = jwtSecurity.extractLoginId(token);
+            Long userId = jwtSecurity.extractUserId(token);
 
-            if (loginId != null &&
-                    SecurityContextHolder.getContext().getAuthentication() == null) {
+            if (userId != null &&
+                    SecurityContextHolder
+                            .getContext()
+                            .getAuthentication() == null) {
 
                 User user = userRepository
-                        .findByLoginId(loginId)
+                        .findById(userId)
                         .orElse(null);
 
-                if (user != null && jwtSecurity.isTokenValid(token, user)) {
+                if (user != null &&
+                        jwtSecurity.isTokenValid(token, user)) {
 
                     List<GrantedAuthority> authorities =
                             List.of(
                                     new SimpleGrantedAuthority(
-                                            "ROLE_" + user.getRole().name()
+                                            "ROLE_" +
+                                                    user.getRole().name()
                                     )
                             );
 
@@ -80,7 +84,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             }
 
         } catch (Exception e) {
-            // Invalid or expired token.
+            // Invalid or expired JWT.
             // Request remains unauthenticated.
         }
 
