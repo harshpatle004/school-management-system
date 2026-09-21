@@ -84,8 +84,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             }
 
         } catch (Exception e) {
-            // Invalid or expired JWT.
-            // Request remains unauthenticated.
+            e.printStackTrace();
         }
 
         filterChain.doFilter(request, response);
