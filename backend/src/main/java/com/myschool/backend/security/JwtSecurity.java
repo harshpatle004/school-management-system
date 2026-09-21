@@ -50,9 +50,10 @@ public class JwtSecurity {
     }
 
     public boolean isTokenValid(String token, User user) {
-        String loginId = extractLoginId(token);
 
-        return loginId.equals(user.getLoginId())
+        Long userId = extractUserId(token);
+
+        return userId.equals(user.getId())
                 && !isTokenExpired(token);
     }
 
