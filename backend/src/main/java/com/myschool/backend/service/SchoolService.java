@@ -1,7 +1,7 @@
 package com.myschool.backend.service;
 
 
-import com.myschool.backend.dto.CreateSchoolRequest;
+import com.myschool.backend.dto.request.CreateSchoolRequest;
 import com.myschool.backend.entity.School;
 import com.myschool.backend.repository.SchoolRepository;
 import jakarta.transaction.Transactional;

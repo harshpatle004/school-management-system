@@ -1,7 +1,7 @@
 package com.myschool.backend.controller;
 
-import com.myschool.backend.dto.LoginRequest;
-import com.myschool.backend.dto.LoginResponse;
+import com.myschool.backend.dto.request.LoginRequest;
+import com.myschool.backend.dto.response.LoginResponse;
 import com.myschool.backend.service.AuthService;
 import org.springframework.web.bind.annotation.*;
 

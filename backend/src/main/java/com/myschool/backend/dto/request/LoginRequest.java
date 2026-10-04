@@ -1,4 +1,4 @@
-package com.myschool.backend.dto;
+package com.myschool.backend.dto.request;
 
 import com.myschool.backend.entity.Role;
 import lombok.Getter;

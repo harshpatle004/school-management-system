@@ -1,6 +1,7 @@
 package com.myschool.backend.controller;
 
-import com.myschool.backend.dto.CreateSchoolRequest;
+import com.myschool.backend.dto.request.CreateSchoolRequest;
+import com.myschool.backend.dto.response.CreateSchoolResponse;
 import com.myschool.backend.entity.School;
 import com.myschool.backend.service.SchoolService;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -16,7 +17,7 @@ public class SchoolController {
         this.schoolService = schoolService;
     }
 
-    @PreAuthorize("hasRole('SUPER_ADMIN')")
+//    @PreAuthorize("hasRole('SUPER_ADMIN')")
     @PostMapping("/create")
     public School createSchool(
             @RequestBody CreateSchoolRequest request

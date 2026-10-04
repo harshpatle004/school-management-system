@@ -1,8 +1,8 @@
 package com.myschool.backend.service;
 
-import com.myschool.backend.dto.CreateUserResponse;
-import com.myschool.backend.dto.LoginRequest;
-import com.myschool.backend.dto.LoginResponse;
+import com.myschool.backend.dto.response.CreateUserResponse;
+import com.myschool.backend.dto.request.LoginRequest;
+import com.myschool.backend.dto.response.LoginResponse;
 import com.myschool.backend.entity.Role;
 import com.myschool.backend.entity.School;
 import com.myschool.backend.entity.User;
