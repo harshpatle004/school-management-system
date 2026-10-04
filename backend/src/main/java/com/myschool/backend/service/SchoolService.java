@@ -4,6 +4,7 @@ package com.myschool.backend.service;
 import com.myschool.backend.dto.CreateSchoolRequest;
 import com.myschool.backend.entity.School;
 import com.myschool.backend.repository.SchoolRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,7 +16,7 @@ public class SchoolService {
         this.schoolRepository = schoolRepository;
 
     }
-
+    @Transactional
     public School createSchool(CreateSchoolRequest request) {
 
 
