@@ -8,8 +8,7 @@ import lombok.Setter;
 @Setter
 public class CreateSchoolRequest {
 
-    @NotBlank
-    private String schoolId;
+
 
     @NotBlank
     private String name;

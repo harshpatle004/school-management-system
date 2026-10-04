@@ -18,11 +18,6 @@ public class SchoolService {
 
     public School createSchool(CreateSchoolRequest request) {
 
-        if (schoolRepository.existsBySchoolId(request.getSchoolId())) {
-
-            throw new RuntimeException("School id already exists");
-
-        }
 
         if (schoolRepository.existsByUdiseCode(request.getUdiseCode())) {
             throw new RuntimeException("Udise already exists");
@@ -30,11 +25,14 @@ public class SchoolService {
 
         School school = new School();
 
-        school.setSchoolId(request.getSchoolId());
         school.setName(request.getName());
         school.setPhoneNumber(request.getPhoneNumber());
         school.setAddress(request.getAddress());
         school.setUdiseCode(request.getUdiseCode());
+
+        String schoolId = String.format("SCH%03d", school.getId());
+
+        school.setSchoolId(schoolId);
 
         return schoolRepository.save(school);
     }
