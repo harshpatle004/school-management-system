@@ -30,6 +30,8 @@ public class SchoolService {
         school.setAddress(request.getAddress());
         school.setUdiseCode(request.getUdiseCode());
 
+        school = schoolRepository.saveAndFlush(school);
+
         String schoolId = String.format("SCH%03d", school.getId());
 
         school.setSchoolId(schoolId);
